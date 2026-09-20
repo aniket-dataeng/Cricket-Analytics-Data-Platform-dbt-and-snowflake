@@ -1,0 +1,127 @@
+version: 1
+
+models:
+  - name: 'fct_player_performance'
+    description: 'Analytics-ready player performance by season.'
+
+    columns:
+      - name: player_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_players')
+                field: player_id
+
+      - name: season
+        tests:
+          - not_null
+
+  - name: 'fct_team_performance'
+    description: 'Analytics-ready team performance by season.'
+
+    columns:
+
+      - name: team_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: team_name
+        tests:
+          - not_null
+
+      - name: team_city
+        tests:
+          - not_null
+
+      - name: matches_played
+        tests:
+          - not_null
+
+      - name: matches_won
+        tests:
+          - not_null
+
+      - name: win_percentage
+        tests:
+          - not_null
+
+  - name: 'fct_match_summary'
+    description: 'Analytics-ready match-level summary including teams, venue, toss and innings performance.'
+
+    columns:
+
+      - name: match_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_matches')
+                field: match_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: match_date
+        tests:
+          - not_null
+
+      - name: venue_name
+        tests:
+          - not_null
+
+      - name: venue_city
+        tests:
+          - not_null
+
+      - name: team1_name
+        tests:
+          - not_null
+
+      - name: team2_name
+        tests:
+          - not_null
+
+      - name: toss_winner_name
+        tests:
+          - not_null
+
+      - name: toss_decision
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['BAT', 'FIELD']
+
+      - name: winner_name
+        tests:
+          - not_null
+
+      - name: innings_1_team_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+
+      - name: innings_1_runs
+        tests:
+          - not_null
+
+      - name: innings_2_team_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
