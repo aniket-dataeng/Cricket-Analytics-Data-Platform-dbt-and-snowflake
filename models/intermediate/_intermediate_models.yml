@@ -167,7 +167,7 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['bat', 'field']
+                values: ['BAT', 'FIELD']
 
       - name: matches
         tests:
