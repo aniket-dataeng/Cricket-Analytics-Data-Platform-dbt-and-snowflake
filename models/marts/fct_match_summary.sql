@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized = 'incremental',
+        unique_key = 'match_id',
+        incremental_strategy = 'merge',
+        on_schema_change = 'sync_all_columns'
+    )
+}}
+
 with innings as (
 
     select
@@ -53,7 +62,10 @@ select
     i.innings_1_runs,
 
     i.innings_2_team_id,
-    i.innings_2_runs
+    i.innings_2_runs,
+
+    m.created_at,
+    m.updated_at
 
 from {{ ref('stg_matches') }} m
 
@@ -74,3 +86,12 @@ left join {{ ref('stg_teams') }} w
 
 left join innings i
     on m.match_id = i.match_id
+
+{% if is_incremental() %}
+
+where m.updated_at >= (
+    select coalesce(max(updated_at), '1900-01-01'::timestamp_ntz)
+    from {{ this }}
+)
+
+{% endif %}
