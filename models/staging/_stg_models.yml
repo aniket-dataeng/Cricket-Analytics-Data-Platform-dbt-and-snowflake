@@ -1,0 +1,111 @@
+version: 1
+
+models:
+  - name: 'stg_players'
+    description: 'Basic enhancements to raw staging table.'
+    columns:
+      - name: 'player_id'
+        tests:
+          - unique
+          - not_null
+      - name: 'player_name'
+        tests:
+          - not_null
+      - name: 'player_dob'
+        tests:
+          - not_null 
+      - name: 'player_skill'
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['All-rounder', 'Bowler', 'Batter', 'Wicketkeeper']
+  
+  - name: 'stg_teams'
+    description: 'This has the teams related information from raw data.'
+    columns:
+      - name: team_id
+        tests:
+          - unique
+          - not_null 
+    
+  - name: 'stg_venues'
+    description: 'This has the venues information from raw data.'
+    columns:
+      - name: 'venue_id'
+        tests:
+          - unique 
+          - not_null
+
+  - name: 'stg_deliveries'
+    description: 'This has the deliveries information.'
+    columns:
+      - name: match_id
+        tests: 
+          - not_null 
+      - name: inning 
+        tests:
+          - not_null 
+      - name: over
+        tests:
+          - not_null 
+      - name: ball
+        tests: 
+          - not_null
+
+  - name: 'stg_matches'
+    description: 'This has the raw matches data.'
+    columns:
+      - name: match_id
+        tests:
+          - unique 
+          - not_null 
+      - name: venue_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_venues')
+                field: venue_id
+      - name: team1_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+      - name: team2_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+
+  - name: 'stg_player_team_history'
+    description: 'Historical relationship between players, teams, and seasons.'
+
+    columns:
+      - name: player_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_players')
+                field: player_id
+
+      - name: team_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                  to: ref('stg_teams')
+                  field: team_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: start_date
+        tests:
+          - not_null
+      

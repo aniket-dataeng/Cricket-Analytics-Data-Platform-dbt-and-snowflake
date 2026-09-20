@@ -1,0 +1,25 @@
+version: 1
+
+sources:
+  - name: 'cricket_analytics_source'
+    description: 'This is the raw source data from the systems.'
+    database: dbt_dev_cricket_analytics_platform
+    schema: raw
+    tables:
+      - name: 'players'
+        description: 'This is the player related information.'
+
+      - name: 'teams'
+        description: 'This is the team related inforation.'
+
+      - name: 'venues'
+        description: 'This is venue related information.'
+
+      - name: 'player_team_history'
+        description: 'This table holds the player_team_history.'
+
+      - name: 'matches'
+        description: 'This table has the matches held information.'
+
+      - name: 'deliveries'
+        description: 'This table has the deliveries bowled information.'
