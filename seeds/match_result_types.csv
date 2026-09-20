@@ -1,0 +1,4 @@
+result_type,description
+WIN,Team won the match
+NO_RESULT,Match had no result
+TIE,Match ended in a tie
