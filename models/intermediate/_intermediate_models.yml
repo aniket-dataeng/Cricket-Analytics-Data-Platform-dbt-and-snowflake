@@ -153,3 +153,30 @@ models:
       - name: avg_runs_per_match
         tests:
           - not_null              
+
+  - name: 'int_toss_performance'
+    description: 'Toss outcome and match result analysis by season and toss decision.'
+
+    columns:
+      - name: season
+        tests:
+          - not_null
+
+      - name: toss_decision
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bat', 'field']
+
+      - name: matches
+        tests:
+          - not_null
+
+      - name: toss_winner_wins
+        tests:
+          - not_null
+
+      - name: toss_winner_win_percentage
+        tests:
+          - not_null
