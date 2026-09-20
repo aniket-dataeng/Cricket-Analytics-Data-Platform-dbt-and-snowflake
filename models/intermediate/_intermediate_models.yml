@@ -1,0 +1,40 @@
+version: 1
+
+models:
+  - name: 'int_match_innings'
+    description: 'Gives the match + innings insights.'
+    columns:
+      - name: match_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_matches')
+                field: match_id
+      - name: inning
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1,2]
+      - name: season
+        tests:
+          - not_null
+      - name: batting_team_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+      - name: winner_id
+        tests:
+          - not_null 
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+      - name: total_runs_scored
+        tests:
+          - not_null 
+      
