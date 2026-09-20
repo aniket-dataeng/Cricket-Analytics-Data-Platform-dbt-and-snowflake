@@ -349,3 +349,12 @@ SELECT COUNT(*) FROM venues;
 SELECT COUNT(*) FROM player_team_history;
 SELECT COUNT(*) FROM matches;
 SELECT COUNT(*) FROM deliveries;
+
+alter table dbt_dev_cricket_analytics_platform.raw.matches
+add column created_at timestamp_ntz,
+add column updated_at timestamp_ntz;
+
+update dbt_dev_cricket_analytics_platform.raw.matches
+set
+    created_at = match_date::timestamp_ntz,
+    updated_at = match_date::timestamp_ntz;

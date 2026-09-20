@@ -20,6 +20,15 @@ sources:
 
       - name: 'matches'
         description: 'This table has the matches held information.'
+        config:
+          freshness:
+            warn_after:
+              count: 5
+              period: hour
+            error_after:
+              count: 2
+              period: day
+          loaded_at_field: updated_at
 
       - name: 'deliveries'
         description: 'This table has the deliveries bowled information.'

@@ -3,9 +3,12 @@ version: 1
 models:
   - name: 'fct_player_performance'
     description: 'Analytics-ready player performance by season.'
-
+    config: 
+      contract: 
+        enforced: true
     columns:
       - name: player_id
+        data_type: integer
         tests:
           - not_null
           - relationships:
@@ -14,8 +17,30 @@ models:
                 field: player_id
 
       - name: season
-        tests:
-          - not_null
+        data_type: number
+        constraints:
+          - type: not_null
+
+      - name: total_batting_runs
+        data_type: number
+
+      - name: batting_matches
+        data_type: number
+
+      - name: avg_runs_per_match
+        data_type: number
+
+      - name: matches_bowled
+        data_type: number
+
+      - name: wickets
+        data_type: number
+
+      - name: runs_conceded
+        data_type: number
+
+      - name: runs_conceded_per_match
+        data_type: number
 
   - name: 'fct_team_performance'
     description: 'Analytics-ready team performance by season.'
