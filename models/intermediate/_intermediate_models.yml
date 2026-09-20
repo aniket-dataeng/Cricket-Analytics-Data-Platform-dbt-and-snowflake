@@ -65,3 +65,91 @@ models:
       - name: avg_runs_per_match
         tests:
           - not_null
+
+  - name: 'int_team_season_performance'
+    description: 'Team performance metrics aggregated by season.'
+
+    columns:
+      - name: team_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_teams')
+                field: team_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: matches_played
+        tests:
+          - not_null
+
+      - name: matches_won
+        tests:
+          - not_null
+
+      - name: win_percentage
+        tests:
+          - not_null
+
+  - name: 'int_player_season_bowling'
+    description: 'Player bowling performance aggregated by season.'
+
+    columns:
+      - name: player_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_players')
+                field: player_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: matches_bowled
+        tests:
+          - not_null
+
+      - name: wickets
+        tests:
+          - not_null
+
+      - name: runs_conceded
+        tests:
+          - not_null
+
+      - name: runs_conceded_per_match
+        tests:
+          - not_null
+
+  - name: 'int_venue_season_performance'
+    description: 'Venue performance metrics aggregated by season.'
+
+    columns:
+      - name: venue_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_venues')
+                field: venue_id
+
+      - name: season
+        tests:
+          - not_null
+
+      - name: matches_played
+        tests:
+          - not_null
+
+      - name: total_runs_scored
+        tests:
+          - not_null
+
+      - name: avg_runs_per_match
+        tests:
+          - not_null              
